@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from './Sidebar'
 import Markdown from 'react-markdown'
 import axios from 'axios'
+import { BASE_URL } from '../utils';
 
 function Saved() {
     const token = localStorage.getItem('token');
     const [data, setData] = useState([]);
     const handleGet = async() => {
         try {
-            const response = await axios.get("http://localhost:5000/chat/saved", {
+            const response = await axios.get(`${BASE_URL}/chat/saved`, {
                 headers: {
                     "auth-token": token
                 }

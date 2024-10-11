@@ -1,31 +1,38 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import { BASE_URL } from '../utils';
 
 function Login() {
     const navigate = useNavigate();
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const handleSubmit = async() => {
         try {
             if(!username || !password) {
                 setError('Please fill all the fields');
                 return;
             }
-            const response = await axios.post('http://localhost:5000/user/login', {
+
+            setLoading(true);
+
+            const response = await axios.post(`${BASE_URL}/user/login`, {
                 username: username,
                 password: password
             });
 
             if(response.status === 200) {
                 localStorage.setItem('token', response.data.token);
+                setLoading(false);
                 navigate('/');
             }
             else if(response.status === 400) {
-                console.log("Hello")
+                setLoading(false);
                 setError('Invalid Credentials');
             }
+            setLoading(false);
         }
         catch(err) {
             setError('Invalid username or password');
@@ -59,6 +66,8 @@ function Login() {
                                 {
                                     error ? <h1 className='text-red-600 mt-2 font-mono'>{error}</h1> : <></>
                                 }
+
+                                {loading ? <h1 className='text-blue-600 mt-2 font-mono'>Loading...</h1> : <></>}
                                 <button onClick={handleSubmit} className='w-full p-2 bg-blue-600 hover:bg-blue-700 font-mono mt-4 text-white rounded-md justify-center flex items-center'>Login</button>
                             </div>
                             <div>

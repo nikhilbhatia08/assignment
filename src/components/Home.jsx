@@ -5,6 +5,7 @@ import axios from 'axios'
 import Markdown from 'react-markdown'
 import { BsBoxArrowInDown } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../utils';
 
 function Home() {
     const token = localStorage.getItem('token');
@@ -12,6 +13,7 @@ function Home() {
     const [question, setQuestion] = useState('');
     const [data, setData] = useState([])
     const messagesEndRef = useRef(null);
+    const [loading, setLoading] = useState(false);
     const [previousQuestion, setPreviousQuestion] = useState('');
 
     const handlePost = async() => {
@@ -19,10 +21,11 @@ function Home() {
             type: 1,
             message: question
         }]);
+        setLoading(true);
         setPreviousQuestion(question);
         setQuestion('');
         try{
-            const response = await axios.post("http://localhost:5000/groq/question", {
+            const response = await axios.post(`${BASE_URL}/groq/question`, {
                 question: question
             }, {
                 headers: {
@@ -30,6 +33,7 @@ function Home() {
                     "Content-Type": "application/json"
                 }
             })
+            setLoading(false);
             setData(data => [...data, {
                 type: 2,
                 message: response.data.message
@@ -42,7 +46,7 @@ function Home() {
 
     const handleSave = async(idx) => {
         try{
-            const response = await axios.post("http://localhost:5000/chat/save", {
+            const response = await axios.post(`${BASE_URL}/chat/save`, {
                 
                 question: data[idx - 1],
                 answer: data[idx]
@@ -95,7 +99,9 @@ function Home() {
                                     </div>
                                 )
                             })
+                            
                         }
+                        {loading ? <div className='flex justify-center items-center'><h1 className='font-mono text-blue-600'>Loading...</h1></div> : <></>}
                         <div ref={messagesEndRef}></div>
                     </div>
                     <div className='flex items-center justify-center'>

@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react'
 import Sidebar from './Sidebar'
 import Markdown from 'react-markdown'
 import axios from 'axios'
+import { BASE_URL } from '../utils';
 
 function History() {
     const [data, setData] = useState([]);
     const token = localStorage.getItem('token');
     const handleGet = async() => {
         try {
-            const response = await axios.get("http://localhost:5000/chat/history", {
+            const response = await axios.get(`${BASE_URL}/chat/history`, {
                 headers: {
                     "auth-token": token
                 }
