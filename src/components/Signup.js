@@ -11,6 +11,7 @@ function Signup() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async() => {
         try{
@@ -23,6 +24,8 @@ function Signup() {
                 return;
             }
 
+            setLoading(true);
+
             const response = await axios.post(`${BASE_URL}/user/signup`, {
                 name: name,
                 email: email,
@@ -32,6 +35,7 @@ function Signup() {
                 setError('');
                 navigate('/login');
             }
+            setLoading(false);
         } 
         catch(err) {
             console.log(err);
@@ -68,6 +72,9 @@ function Signup() {
                                 <input type='password' value={reEnterPassword} onChange={(e) => setReEnterPassword(e.target.value)} className='font-mono border font-light bg-gray-50 p-2 w-full mt-2 resize-none border-gray-300 rounded-md focus:outline-none' placeholder='Re-enter your password'/>
                                 {
                                     error ? <h1 className='text-red-600 font-mono mt-2'>{error}</h1> : <></>
+                                }
+                                {
+                                    loading ? <h1 className='text-blue-600 font-mono mt-2'>Loading...</h1> : <></>
                                 }
                                 <button onClick={handleSubmit} className='w-full p-2 bg-blue-600 hover:bg-blue-700 font-mono mt-4 text-white rounded-md justify-center flex items-center'>Signup</button>
                             </div>
