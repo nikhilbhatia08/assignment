@@ -15,6 +15,7 @@ function Home() {
     const messagesEndRef = useRef(null);
     const [loading, setLoading] = useState(false);
     const [previousQuestion, setPreviousQuestion] = useState('');
+    const [savedidx, setSavedIdx] = useState(-1);
 
     const handlePost = async() => {
         setData(data => [...data, {
@@ -59,6 +60,7 @@ function Home() {
 
             if(response.status === 200) {
                 console.log('Saved');
+                setSavedIdx(idx);
                 alert('Saved');
             }
         }
@@ -90,7 +92,10 @@ function Home() {
                                     <div className={`flex ${node.type === 1 ? 'justify-start' : 'justify-end'} p-2`}>
                                         <div className={`p-2 max-w-[50%] overflow-x-scroll ${node.type === 1 ? 'bg-blue-600 text-white rounded-md' : 'bg-gray-300 text-black rounded-md'}`}>
                                             {
-                                                node.type === 2 ? <button onClick={() => handleSave(idx)} className='bg-blue-600 mb-2 flex items-center p-2 ml-2 mt-2 rounded-md'> <BsBoxArrowInDown className='text-white' size={20}/> <h1 className='text-white text-xl font-mono'>save</h1>  </button> : <></>
+                                                node.type === 2 ? <button onClick={() => {alert('saved');handleSave(idx)}} className='bg-blue-600 mb-2 flex items-center p-2 ml-2 mt-2 rounded-md'> <BsBoxArrowInDown className='text-white' size={20}/> <h1 className='text-white text-xl font-mono'>save</h1>  </button> : <></>
+                                            }
+                                            {
+                                                savedidx === idx ? <h1 className='text-blue-600 font-mono text-xl'>Saved</h1> : <></>
                                             }
                                             <Markdown>
                                             {node.message}
