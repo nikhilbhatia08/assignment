@@ -18,25 +18,25 @@ function Sidebar(props) {
         window.location.href = '/login';
     }
 
-    const handleGet = async() => {
-        try{
-            const response = await axios.get(`${BASE_URL}/user/details`, {
-                headers: {
-                    "auth-token": token
-                }
-            })
-            if(response.status === 200) {
-                setName(response.data.user.name);
-            }
-        }
-        catch(err) {
-            console.log(err);
-        }
-    }
+    // const handleGet = async() => {
+    //     try{
+    //         const response = await axios.get(`${BASE_URL}/user/details`, {
+    //             headers: {
+    //                 "auth-token": token
+    //             }
+    //         })
+    //         if(response.status === 200) {
+    //             setName(response.data.user.name);
+    //         }
+    //     }
+    //     catch(err) {
+    //         console.log(err);
+    //     }
+    // }
 
-    useEffect(() => {
-        handleGet();
-    }, []);
+    // useEffect(() => {
+    //     handleGet();
+    // }, []);
   return (
     <>
         <div className={`min-h-screen ${collapse ? 'w-[5%]' : 'w-[20%]'} border-r delay-150 duration-300 ease-in-out border-gray-300`}>
@@ -49,7 +49,7 @@ function Sidebar(props) {
                 collapse ? <></> :
                 <div className='ml-4 flex items-center my-2'>
                     <h1 className='font-mono text-xl text-blue-600'>
-                     👋 Hi, {name}! 
+                     👋 Hi! 
                     </h1>
                 </div>
             }
