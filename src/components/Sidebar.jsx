@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BsChatLeft } from "react-icons/bs";
 import { BsBookmark } from "react-icons/bs";
 import { BsChevronDoubleRight } from "react-icons/bs";
@@ -6,13 +6,37 @@ import { BsChevronDoubleLeft } from "react-icons/bs";
 import { BsHddStack } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 import { MdLogout } from "react-icons/md";
+import axios from 'axios';
+import { BASE_URL } from '../utils';
 
 function Sidebar(props) {
     const [collapse, setCollapse] = useState(false)
+    const [name, setName] = useState('');
+    const token = localStorage.getItem('token');
     const handleLogout = () => {
         localStorage.removeItem('token');
         window.location.href = '/login';
     }
+
+    const handleGet = async() => {
+        try{
+            const response = await axios.get(`${BASE_URL}/user/details`, {
+                headers: {
+                    "auth-token": token
+                }
+            })
+            if(response.status === 200) {
+                setName(response.data.user.name);
+            }
+        }
+        catch(err) {
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        handleGet();
+    }, []);
   return (
     <>
         <div className={`min-h-screen ${collapse ? 'w-[5%]' : 'w-[20%]'} border-r delay-150 duration-300 ease-in-out border-gray-300`}>
@@ -21,6 +45,14 @@ function Sidebar(props) {
                 {collapse ? <BsChevronDoubleRight onClick={() => setCollapse(false)} className='text-blue-600 ml-4 hover:delay-150 duration-300 rounded-md ease-in-out font-bold' size={22}/> : <BsChevronDoubleLeft onClick={() => setCollapse(true)} className='text-blue-600 hover:delay-150 duration-300 rounded-md ease-in-out font-bold' size={24}/>}
             </div>
             <div className='flex-row mt-2 items-center'>
+            {
+                collapse ? <></> :
+                <div className='ml-4 flex items-center my-2'>
+                    <h1 className='font-mono text-xl text-blue-600'>
+                     👋 Hi, {name}! 
+                    </h1>
+                </div>
+            }
                 <Link to={'/'}>
                     <div className={`flex hover:bg-gray-300 ${collapse ? 'justify-center' : ''} ${props.key === 0 ? 'bg-gray-300' : ''} hover:delay-100 duration-300 rounded-md ease-in-out p-2 mx-2 items-center`}>
                         <BsChatLeft className='text-teal-600 font-bold' size={22}/>
