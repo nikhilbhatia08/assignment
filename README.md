@@ -1,11 +1,11 @@
 # TruBack
 
-**TruBack** is a project designed to handle queries of the users and uses llm api's to give the answers to the queries of the users. We can also save our responses and also see our previous reponses in the history tab. 
+**TruBack** is a project designed to handle queries of the users and uses llm api's to give the answers to the queries of the users. We can also save our responses and also see our previous reponses in the history tab.
 
 ## Features
 
 - Feature 1: login and authentication
-- Feature 2: asking queries to the llm and getting the answers 
+- Feature 2: asking queries to the llm and getting the answers
 - Feature 3: saving and history features for saving some responses and having a history
 
 ## Technologies Used
@@ -16,7 +16,7 @@
 - **Mongoose** - ODM for MongoDB
 - **JWT** - JSON Web Tokens for authentication
 - **Axios** - HTTP client for API requests
-- **React-js** - For Responsive Frontend building 
+- **React-js** - For Responsive Frontend building
 
 ## Installation
 

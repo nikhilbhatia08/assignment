@@ -1,9 +1,9 @@
-import { BrowserRouter as Router, Routes, Route  } from "react-router-dom";
-import Login from "./components/login";
-import Home from "./components/Home";
-import Signup from "./components/Signup";
-import Saved from "./components/Saved";
-import History from "./components/History";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './components/login';
+import Home from './components/Home';
+import Signup from './components/Signup';
+import Saved from './components/Saved';
+import History from './components/History';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/saved" element={<Saved />} />
         <Route path="/history" element={<History />} />
-      </Routes> 
+      </Routes>
     </Router>
   );
 }
